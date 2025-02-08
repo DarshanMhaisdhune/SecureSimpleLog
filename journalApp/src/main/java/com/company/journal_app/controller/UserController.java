@@ -1,8 +1,8 @@
-package com.company.journalApp.controller;
+package com.company.journal_app.controller;
 
-import com.company.journalApp.Repository.UserRepository;
-import com.company.journalApp.entity.User;
-import com.company.journalApp.service.UserService;
+import com.company.journal_app.repository.UserRepository;
+import com.company.journal_app.entity.User;
+import com.company.journal_app.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,10 +32,7 @@ public class UserController {
     @GetMapping("/id/{id}")
     public ResponseEntity<User> getById(@PathVariable ObjectId id){
        Optional<User> userById = userService.findById(id);
-       if(userById.isPresent()){
-           return new ResponseEntity<>(userById.get(),HttpStatus.OK);
-       }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return userById.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("/{userName}")

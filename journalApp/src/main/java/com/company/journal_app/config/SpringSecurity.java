@@ -1,6 +1,6 @@
-package com.company.journalApp.config;
+package com.company.journal_app.config;
 
-import com.company.journalApp.service.UserDetailsServiceImpl;
+import com.company.journal_app.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 

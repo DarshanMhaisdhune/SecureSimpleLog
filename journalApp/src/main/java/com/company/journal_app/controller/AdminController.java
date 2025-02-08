@@ -1,7 +1,7 @@
-package com.company.journalApp.controller;
+package com.company.journal_app.controller;
 
-import com.company.journalApp.entity.User;
-import com.company.journalApp.service.UserService;
+import com.company.journal_app.entity.User;
+import com.company.journal_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

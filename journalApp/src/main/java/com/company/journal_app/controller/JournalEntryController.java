@@ -1,9 +1,10 @@
-package com.company.journalApp.controller;
+package com.company.journal_app.controller;
 
-import com.company.journalApp.entity.JournalEntry;
-import com.company.journalApp.entity.User;
-import com.company.journalApp.service.JournalEntryService;
-import com.company.journalApp.service.UserService;
+import com.company.journal_app.entity.JournalEntry;
+import com.company.journal_app.entity.User;
+import com.company.journal_app.service.JournalEntryService;
+import com.company.journal_app.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @RequestMapping("/journal")
 public class JournalEntryController {
@@ -42,7 +43,7 @@ public class JournalEntryController {
             return new ResponseEntity<>(myEntry, HttpStatus.CREATED) ;
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
+            log.error(String.valueOf(e));
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

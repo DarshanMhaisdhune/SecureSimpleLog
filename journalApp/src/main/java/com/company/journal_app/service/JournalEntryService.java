@@ -1,8 +1,9 @@
-package com.company.journalApp.service;
+package com.company.journal_app.service;
 
-import com.company.journalApp.Repository.JournalEntryRepository;
-import com.company.journalApp.entity.JournalEntry;
-import com.company.journalApp.entity.User;
+import com.company.journal_app.repository.JournalEntryRepository;
+import com.company.journal_app.entity.JournalEntry;
+import com.company.journal_app.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class JournalEntryService {
 
@@ -20,6 +22,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService ;
+
 
     public void saveEntry(JournalEntry journalEntry){
         journalEntryRepository.save(journalEntry);
@@ -35,7 +38,7 @@ public class JournalEntryService {
             userService.saveUser(user);
         }
         catch (Exception e){
-            System.out.println(e);
+           log.error("Error",e);
             throw new RuntimeException("An error occur while saving the entry.",e);
         }
 
@@ -52,7 +55,7 @@ public class JournalEntryService {
 
     @Transactional
     public boolean deleteById(ObjectId id, String userName){
-        boolean removed = false ;
+        boolean removed;
         try {
             User user = userService.findByUserName(userName);
             removed = user.getJournalEntries().removeIf(x -> x.getId().equals(id));
@@ -63,7 +66,7 @@ public class JournalEntryService {
 
         }
         catch (Exception e){
-            System.out.println(e);
+            log.error(String.valueOf(e));
             throw  new RuntimeException("An error occur while deleting the entry.",e);
         }
     return removed ;

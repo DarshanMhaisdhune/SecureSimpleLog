@@ -1,17 +1,19 @@
-package com.company.journalApp.service;
+package com.company.journal_app.service;
 
-import com.company.journalApp.Repository.UserRepository;
-import com.company.journalApp.entity.User;
+import com.company.journal_app.repository.UserRepository;
+import com.company.journal_app.entity.User;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
+
 import java.util.Optional;
 
 @Service
@@ -22,10 +24,18 @@ public class UserService {
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     public void saveNewUser(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Arrays.asList("USER"));
-        userRepository.save(user);
+        try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRoles(List.of("USER"));
+            userRepository.save(user);
+        }
+        catch ( Exception e){
+            logger.error("User not saved!, error occurred for {} :", user.getUserName(), e);
+        }
+
     }
 
     public void saveAdmin(User user){
